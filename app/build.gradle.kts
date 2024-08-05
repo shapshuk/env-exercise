@@ -21,21 +21,26 @@ android {
     }
 
     buildTypes {
-        create("prod") {
+        val prod = "prod"
+        val dev = "dev"
+        val stage = "stage"
+
+        create(prod) {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            applicationIdSuffix = ".prod"
+            applicationIdSuffix = ".$prod"
+            signingConfig = signingConfigs.getByName("debug")
         }
-        create("dev") {
-            applicationIdSuffix = ".dev"
+        create(dev) {
+            applicationIdSuffix = ".$dev"
             isDebuggable = true
             signingConfig = signingConfigs.getByName("debug")
         }
-        create("stage") {
-            applicationIdSuffix = ".stage"
+        create(stage) {
+            applicationIdSuffix = ".$stage"
             isDebuggable = true
             signingConfig = signingConfigs.getByName("debug")
         }
