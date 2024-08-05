@@ -21,12 +21,23 @@ android {
     }
 
     buildTypes {
-        release {
+        create("prod") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            applicationIdSuffix = ".prod"
+        }
+        create("dev") {
+            applicationIdSuffix = ".dev"
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
+        }
+        create("stage") {
+            applicationIdSuffix = ".stage"
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -38,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
