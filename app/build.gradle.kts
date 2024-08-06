@@ -21,28 +21,36 @@ android {
     }
 
     buildTypes {
-        val prod = "prod"
-        val dev = "dev"
-        val stage = "stage"
-
-        create(prod) {
+        release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            applicationIdSuffix = ".$prod"
+        }
+        debug {
+            isDebuggable = true
             signingConfig = signingConfigs.getByName("debug")
+        }
+    }
+
+    flavorDimensions += "environment"
+    productFlavors {
+        val prod = "prod"
+        val dev = "dev"
+        val stage = "stage"
+
+        create(prod) {
+            dimension = "environment"
+            applicationIdSuffix = ".$prod"
         }
         create(dev) {
+            dimension = "environment"
             applicationIdSuffix = ".$dev"
-            isDebuggable = true
-            signingConfig = signingConfigs.getByName("debug")
         }
         create(stage) {
+            dimension = "environment"
             applicationIdSuffix = ".$stage"
-            isDebuggable = true
-            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
